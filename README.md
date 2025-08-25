@@ -1,36 +1,218 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Opal AI 💎
 
-## Getting Started
+## 1\. Installation
 
-First, run the development server:
+### Getting Started
+
+This guide will walk you through setting up the Opal AI project on your local machine for development and testing.
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed on your system:
+
+  * **[Bun](https://bun.sh/):** This project uses Bun for package management and as its runtime. It's a fast all-in-one JavaScript toolkit.
+  * **[Git](https://git-scm.com/):** For cloning the repository.
+  * **A Database Server:** The project is configured to use PostgreSQL, but you can adapt it to another database supported by Prisma (e.g., MySQL, SQLite).
+
+### A. Clone the Repository
+
+First, clone the project repository from GitHub to your local machine using the following command in your terminal:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+git clone [https://github.com/rizzit11/OpalAI.git](https://github.com/rizzit11/OpalAI.git)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Once the cloning is complete, navigate into the project directory:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Bash:
+cd OpalAI
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+B. Project Setup
+Follow these steps to install dependencies and configure the necessary environment variables.
 
-## Learn More
+Install Dependencies
+Instead of npm or yarn, this project uses bun. Run the following command to install all the required packages listed in package.json:
 
-To learn more about Next.js, take a look at the following resources:
+Bash
+bun install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Configure Environment Variables
+The project requires several environment variables to connect to your database and external services (like Clerk, AWS, and AI APIs).
+Create a new file in the root of the project directory named .env.local.
+Copy the contents of the template below into your new .env.local file.
+Replace the placeholder values (e.g., "your_database_url_here") with your actual credentials and API keys.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+.env.local Template:
+Code snippet
 
-## Deploy on Vercel
+# Prisma Database URL
+# Example for PostgreSQL: postgresql://USER:PASSWORD@HOST:PORT/DATABASE
+DATABASE_URL="your_database_url_here"
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Clerk Authentication (Get these from your Clerk Dashboard)
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="your_clerk_publishable_key"
+CLERK_SECRET_KEY="your_clerk_secret_key"
+NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
+NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL="/dashboard"
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL="/dashboard"
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# AWS Credentials (For S3 and CloudFront)
+AWS_ACCESS_KEY_ID="your_aws_access_key"
+AWS_SECRET_ACCESS_KEY="your_aws_secret_key"
+AWS_REGION="your_aws_region"
+S3_BUCKET_NAME="your_s3_bucket_name"
+
+# AI Service API Keys
+OPENAI_API_KEY="your_openai_api_key"
+# Add other keys if needed for Whisper AI or VoiceFlow
+VOICEFLOW_API_KEY="your_voiceflow_api_key"
+
+# Application URL
+NEXT_PUBLIC_URL="http://localhost:3000"
+Set Up the Database
+This project uses Prisma to manage the database schema. After configuring your DATABASE_URL in the .env.local file, run the following command to apply the schema to your database. This will create all the necessary tables.
+
+
+Bash
+bunx prisma migrate dev
+
+You may be prompted to give the migration a name; you can enter something like init.
+
+C. Running the Application
+Once you have completed the setup, you can start the development server. Run the following command in your terminal:
+
+Bash
+bun run dev
+
+This will start the Next.js application in development mode. You can now open your web browser and navigate to http://localhost:3000 to see the application running.
+
+2. About the Project
+Opal AI is a powerful platform designed to make screen recordings intelligent and interactive. At its core, it's an ecosystem that transforms standard video content into a searchable and insightful knowledge base.
+
+The project is split into two main components for the user:
+
+The Web App (Next.js): This is your central dashboard. It's where you can manage your account, browse your library of recordings, and interact with the insights automatically generated by the AI.
+
+The Desktop App (Electron.js): This is the tool you'll use for recording. We created a native desktop application so you can capture your entire screen—not just a single browser tab—ensuring a high-quality and complete recording of your workflow.
+
+The process works by streaming your recording in real-time, piece by piece, to a dedicated Express.js server. This approach is robust and ensures that your data is saved continuously as you record. Once a recording is finished, this server kicks off an AI pipeline that automatically transcribes, summarizes, and analyzes your video, turning it into a fully interactive resource.
+
+Key Features ✨
+Native Screen Recording: High-fidelity screen and audio capture using the Electron.js desktop client.
+
+Real-Time Streaming: Video is streamed and saved to the server as you record, minimizing data loss.
+
+Secure Authentication: Robust user authentication powered by Clerk for both web and desktop.
+
+AI-Powered Transcription: Automatic video-to-text transcription using Whisper AI.
+
+Intelligent Content Generation: Automated video titles and summaries generated by OpenAI.
+
+Interactive Knowledge Base: Transform video transcripts into a Q&A agent using VoiceFlow.
+
+Scalable Cloud Infrastructure: Leverages AWS S3 for secure storage and AWS CloudFront for fast video streaming.
+
+Dynamic User Experience: A sleek, modern frontend built with Next.js.
+
+
+Tech Stack 🛠️
+Frontend: Next.js
+
+Desktop App: Electron.js
+
+Real-time Backend: Express.js, Socket.io
+
+Authentication: Clerk
+
+Cloud Storage: AWS S3 (Simple Storage Service)
+
+Content Delivery Network (CDN): AWS CloudFront
+
+AI Transcription: Whisper AI
+
+AI Content Generation: OpenAI
+
+Knowledge Base / AI Agent: VoiceFlow
+
+Database: PostgreSQL with Prisma
+
+3. Architecture
+The architecture of Opal AI is designed for robustness, scalability, and real-time performance. It separates concerns between the client applications, the real-time processing server, and the cloud infrastructure.
+
+Architectural Breakdown:
+The system operates through a series of coordinated workflows, which are visualized and explained below.
+
+Stage 1: User Authentication
+The user signs up or logs in through the Next.js or Electron application. Clerk handles the core authentication process. Upon success, a callback updates the user's profile in our database. The Electron app then syncs with this profile to get user-specific settings.
+
+[ Web App / Desktop App ]
+       |
+       | 1. Login/Signup Request
+       v
+  [ Clerk Auth ]
+       |
+       | 2. Auth Webhook (user data)
+       v
+[ Next.js Backend API ]
+       |
+       | 3. Create/Update User
+       v
+[ (Database) ]
+Stage 2: Real-Time Screen Recording & Ingestion
+The user starts a recording in the Electron app. The app captures the screen and sends video "chunks" every second over a WebSocket to our dedicated Express.js server, which writes them to a temporary file.
+
+[ Electron Desktop App ]
+       |
+       | 5. Stream Video Chunks (WebSocket)
+       v
+[ Express.js Server ]
+       |
+       | 6. Write chunks to a temporary file
+       v
+[ Temp File System ]
+Stage 3: Video Processing, Storage & AI Enrichment
+When the recording stops, the Express server tells the Next.js backend to create a "processing" entry in the database. The full video is then uploaded to a private AWS S3 bucket. Once the upload is complete, the AI pipeline kicks off: the video is transcribed by Whisper AI, summarized by OpenAI, and indexed by VoiceFlow. Finally, the database entry is updated to "completed" with all the new AI data, and the temporary file is deleted.
+
+[ Express.js Server ]
+       |
+       | 7. API Call to Next.js -> [ Create "Processing" DB Entry ]
+       |
+       | 8. Upload complete video file
+       v
+[ AWS S3 Bucket ]
+       |
+       | 9. Upload is complete, start AI pipeline
+       v
+[ Express.js Server ]
+       |
+       |--> 10. Send to [ Whisper AI ] -> (Get Transcript)
+       |
+       |--> 11. Send Transcript to [ OpenAI ] -> (Get Title/Summary)
+       |
+       |--> 12. Send Transcript to [ VoiceFlow ] -> (Update Knowledge Base)
+       |
+       | 13. API Call to Next.js -> [ Update DB Entry to "Completed" with AI data ]
+       |
+       | 14. Delete temp file from [ Temp File System ]
+       v
+   (Process Complete)
+Stage 4: Video Playback
+When a user on the Next.js frontend clicks to watch a video, the request is routed through AWS CloudFront. To maintain security, CloudFront is the only service with permission to fetch the video from our private S3 bucket. It then securely streams the content with low latency to the user's browser.
+
+[ Next.js Web App ]
+       |
+       | 15. User requests to play a video
+       v
+[ AWS CloudFront (CDN) ]
+       |
+       | 16. Securely fetches the video from the private bucket
+       v
+[ AWS S3 Bucket ]
+       |
+       | 17. Serves the video file to CloudFront
+       v
+[ AWS CloudFront (CDN) ]
+       |
+       | 18. Streams the video with low latency back to the user
+       v
+[ Next.js Web App ]
