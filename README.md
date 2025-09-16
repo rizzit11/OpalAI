@@ -12,7 +12,7 @@ Before you begin, ensure you have the following installed on your system:
 
 - **[Bun](https://bun.sh/):** This project uses Bun for package management and as its runtime. It's a fast all-in-one JavaScript toolkit.  
 - **[Git](https://git-scm.com/):** For cloning the repository.  
-- **A Database Server:** The project is configured to use **PostgreSQL**, but you can adapt it to another database supported by Prisma (e.g., MySQL, SQLite).  
+- **A Database Server:** The project is configured to use **PostgreSQL**, but you can adapt it to another database supported by Prisma, Neon (e.g., MySQL, SQLite).  
 
 ---
 
@@ -47,35 +47,53 @@ bash : bun install
 
 3. **[📄 .env.local Template:]**
 ```bash
-# Prisma Database URL
-# Example for PostgreSQL: postgresql://USER:PASSWORD@HOST:PORT/DATABASE
-DATABASE_URL="your_database_url_here"
+# Neon Database URL
+DATABASE_URL=
 
-# Clerk Authentication (Get these from your Clerk Dashboard)
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="your_clerk_publishable_key"
-CLERK_SECRET_KEY="your_clerk_secret_key"
-NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
-NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL="/dashboard"
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL="/dashboard"
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
 
-# AWS Credentials (For S3 and CloudFront)
-AWS_ACCESS_KEY_ID="your_aws_access_key"
-AWS_SECRET_ACCESS_KEY="your_aws_secret_key"
-AWS_REGION="your_aws_region"
-S3_BUCKET_NAME="your_s3_bucket_name"
+# Stripe Integration
+NEXT_PUBLIC_STRIPE_PUBLISH_KEY=
+STRIPE_SECRET_KEY=
 
-# AI Service API Keys
-OPENAI_API_KEY="your_openai_api_key"
-# Add other keys if needed for Whisper AI or VoiceFlow
-VOICEFLOW_API_KEY="your_voiceflow_api_key"
+# Upload Care
+UPLOAD_CARE_PUBLIC_KEY=
+UPLOAD_CARE_SECRET=
 
-# Application URL
-NEXT_PUBLIC_URL="http://localhost:3000"
-```
+# Vercel Configuration
+PROJECT_ID_VERCEL=
+TEAM_ID_VERCEL= X
+AUTH_BEARER_TOKEN=
+
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_SUPABASE_URL=
+
+# Clerk Redirect URLs
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+
+# Stripe Subscription
+STRIPE_SUBSCRIPTION_PRICE_ID=
+STRIPE_CLIENT_SECRET=
+
+# Hosting Configuration
+NEXT_PUBLIC_HOST_URL=
+NEXT_PUBLIC_CLOUD_FRONT_STREAM_URL=
+
+# Mail Configuration
+MAIL_TRAP_HOST=
+MAIL_TRAP_USER_ID=
+MAIL_TRAP_USER_PASSWORD=
+
+# AI Integration
+OPEN_AI_KEY=
+NEXT_PUBLIC_VOICE_FLOW_KEY=
 
 **[3. Set Up the Database]**
-This project uses Prisma to manage the database schema. After configuring your DATABASE_URL in the .env.local file, run the following command to apply the schema to your database. This will create all the necessary tables.
+This project uses Prisma & Neon to manage the database schema. After configuring your DATABASE_URL in the .env.local file, run the following command to apply the schema to your database. This will create all the necessary tables.
 
 bash : bunx prisma migrate dev
 You may be prompted to give the migration a name; you can enter something like init.
@@ -159,7 +177,7 @@ Final output → An interactive knowledge base.
 
 - Knowledge Base / AI Agent: VoiceFlow
 
-- Database: PostgreSQL with Prisma
+- Database: PostgreSQL with Prisma, Neon
 
 ---
 
