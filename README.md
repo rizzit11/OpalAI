@@ -1,49 +1,52 @@
-# Opal AI 💎
+# Opal AI  
 
-## 1\. Installation
+## 📦 1. Installation  
 
-### Getting Started
+### 🚀 Getting Started  
+This guide will walk you through setting up the **Opal AI** project on your local machine for development and testing.  
 
-This guide will walk you through setting up the Opal AI project on your local machine for development and testing.
+---
 
-### Prerequisites
+### ✅ Prerequisites  
+Before you begin, ensure you have the following installed on your system:  
 
-Before you begin, ensure you have the following installed on your system:
+- **[Bun](https://bun.sh/):** This project uses Bun for package management and as its runtime. It's a fast all-in-one JavaScript toolkit.  
+- **[Git](https://git-scm.com/):** For cloning the repository.  
+- **A Database Server:** The project is configured to use **PostgreSQL**, but you can adapt it to another database supported by Prisma (e.g., MySQL, SQLite).  
 
-  * **[Bun](https://bun.sh/):** This project uses Bun for package management and as its runtime. It's a fast all-in-one JavaScript toolkit.
-  * **[Git](https://git-scm.com/):** For cloning the repository.
-  * **A Database Server:** The project is configured to use PostgreSQL, but you can adapt it to another database supported by Prisma (e.g., MySQL, SQLite).
+---
 
-### A. Clone the Repository
+## 🔹 A. Clone the Repository  
 
-First, clone the project repository from GitHub to your local machine using the following command in your terminal:
+First, clone the project repository from GitHub to your local machine using the following command in your terminal:  
 
 ```bash
-git clone [https://github.com/rizzit11/OpalAI.git](https://github.com/rizzit11/OpalAI.git)
-
+git clone https://github.com/rizzit11/OpalAI.git
+```
 Once the cloning is complete, navigate into the project directory:
-
-Bash:
-cd OpalAI
-
-B. Project Setup
+```bash
+bash : cd OpalAI
+```
+## 🔹 B. Project Setup
 Follow these steps to install dependencies and configure the necessary environment variables.
 
-Install Dependencies
+1. **[Install Dependencies]**
 Instead of npm or yarn, this project uses bun. Run the following command to install all the required packages listed in package.json:
+```bash
+bash : bun install
+```
+2. **[Configure Environment Variables]**
 
-Bash
-bun install
+- The project requires several environment variables to connect to your database and external services (like Clerk, AWS, and AI APIs).
 
-Configure Environment Variables
-The project requires several environment variables to connect to your database and external services (like Clerk, AWS, and AI APIs).
-Create a new file in the root of the project directory named .env.local.
-Copy the contents of the template below into your new .env.local file.
-Replace the placeholder values (e.g., "your_database_url_here") with your actual credentials and API keys.
+- Create a new file in the root of the project directory named .env.local.
 
-.env.local Template:
-Code snippet
+- Copy the contents of the template below into your new .env.local file.
 
+- Replace the placeholder values (e.g., "your_database_url_here") with your actual credentials and API keys.
+
+3. **[📄 .env.local Template:]**
+```bash
 # Prisma Database URL
 # Example for PostgreSQL: postgresql://USER:PASSWORD@HOST:PORT/DATABASE
 DATABASE_URL="your_database_url_here"
@@ -69,82 +72,108 @@ VOICEFLOW_API_KEY="your_voiceflow_api_key"
 
 # Application URL
 NEXT_PUBLIC_URL="http://localhost:3000"
-Set Up the Database
+```
+
+**[3. Set Up the Database]**
 This project uses Prisma to manage the database schema. After configuring your DATABASE_URL in the .env.local file, run the following command to apply the schema to your database. This will create all the necessary tables.
 
-
-Bash
-bunx prisma migrate dev
-
+bash : bunx prisma migrate dev
 You may be prompted to give the migration a name; you can enter something like init.
 
-C. Running the Application
+## 🔹 C. Running the Application
 Once you have completed the setup, you can start the development server. Run the following command in your terminal:
+```bash
+**[bash : bun run dev]**
+```
+This will start the Next.js application in development mode.
+You can now open your web browser and navigate to:
 
-Bash
-bun run dev
+**[👉 http://localhost:3000]**
 
-This will start the Next.js application in development mode. You can now open your web browser and navigate to http://localhost:3000 to see the application running.
 
-2. About the Project
+---
+
+
+## 📖 2. About the Project
+
+
 Opal AI is a powerful platform designed to make screen recordings intelligent and interactive. At its core, it's an ecosystem that transforms standard video content into a searchable and insightful knowledge base.
 
 The project is split into two main components for the user:
 
-The Web App (Next.js): This is your central dashboard. It's where you can manage your account, browse your library of recordings, and interact with the insights automatically generated by the AI.
+#####1. The Web App (Next.js):
 
-The Desktop App (Electron.js): This is the tool you'll use for recording. We created a native desktop application so you can capture your entire screen—not just a single browser tab—ensuring a high-quality and complete recording of your workflow.
+- Your central dashboard.
 
-The process works by streaming your recording in real-time, piece by piece, to a dedicated Express.js server. This approach is robust and ensures that your data is saved continuously as you record. Once a recording is finished, this server kicks off an AI pipeline that automatically transcribes, summarizes, and analyzes your video, turning it into a fully interactive resource.
+- Manage your account, browse your library of recordings, and interact with AI-generated insights.
 
-Key Features ✨
-Native Screen Recording: High-fidelity screen and audio capture using the Electron.js desktop client.
+##### 2. The Desktop App (Electron.js):
 
-Real-Time Streaming: Video is streamed and saved to the server as you record, minimizing data loss.
+- The tool for recording.
 
-Secure Authentication: Robust user authentication powered by Clerk for both web and desktop.
+- Captures your entire screen (not just a browser tab) for high-quality recordings.
 
-AI-Powered Transcription: Automatic video-to-text transcription using Whisper AI.
+### 🔑 How it Works
+The process works by streaming your recording in real-time to a dedicated Express.js server. Data is saved continuously as you record. Once finished, the AI pipeline automatically:
 
-Intelligent Content Generation: Automated video titles and summaries generated by OpenAI.
+- Transcribes (Whisper AI)
+- Summarizes (OpenAI)
+- Analyzes (VoiceFlow)
 
-Interactive Knowledge Base: Transform video transcripts into a Q&A agent using VoiceFlow.
+```bash
+Final output → An interactive knowledge base.
+```
+### ✨ Key Features
+- 🎥 Native Screen Recording: High-fidelity screen + audio capture using Electron.js.
 
-Scalable Cloud Infrastructure: Leverages AWS S3 for secure storage and AWS CloudFront for fast video streaming.
+- ⚡ Real-Time Streaming: Video streamed & saved as you record, minimizing data loss.
 
-Dynamic User Experience: A sleek, modern frontend built with Next.js.
+- 🔐 Secure Authentication: User authentication via Clerk.
+
+- 📝 AI-Powered Transcription: Whisper AI converts video-to-text automatically.
+
+- 🧠 Intelligent Content Generation: OpenAI generates titles & summaries.
+
+- 🤖 Interactive Knowledge Base: Video transcripts become a Q&A agent using VoiceFlow.
+
+- ☁️ Scalable Cloud Infrastructure: Secure storage with AWS S3 + fast streaming with AWS CloudFront.
+
+- 💻 Dynamic User Experience: Sleek, modern frontend built with Next.js.
+
+### 🛠️ Tech Stack
+- Frontend: Next.js
+
+- Desktop App: Electron.js
+
+- Real-time Backend: Express.js, Socket.io
+
+- Authentication: Clerk
+
+- Cloud Storage: AWS S3
+
+- CDN: AWS CloudFront
+
+- AI Transcription: Whisper AI
+
+- AI Content Generation: OpenAI
+
+- Knowledge Base / AI Agent: VoiceFlow
+
+- Database: PostgreSQL with Prisma
+
+---
 
 
-Tech Stack 🛠️
-Frontend: Next.js
-
-Desktop App: Electron.js
-
-Real-time Backend: Express.js, Socket.io
-
-Authentication: Clerk
-
-Cloud Storage: AWS S3 (Simple Storage Service)
-
-Content Delivery Network (CDN): AWS CloudFront
-
-AI Transcription: Whisper AI
-
-AI Content Generation: OpenAI
-
-Knowledge Base / AI Agent: VoiceFlow
-
-Database: PostgreSQL with Prisma
-
-3. Architecture
+# 3. Architecture
 The architecture of Opal AI is designed for robustness, scalability, and real-time performance. It separates concerns between the client applications, the real-time processing server, and the cloud infrastructure.
 
-Architectural Breakdown:
+## Architectural Breakdown
 The system operates through a series of coordinated workflows, which are visualized and explained below.
 
-Stage 1: User Authentication
+### Stage 1: User Authentication
 The user signs up or logs in through the Next.js or Electron application. Clerk handles the core authentication process. Upon success, a callback updates the user's profile in our database. The Electron app then syncs with this profile to get user-specific settings.
 
+```bash
 [ Web App / Desktop App ]
        |
        | 1. Login/Signup Request
@@ -157,10 +186,13 @@ The user signs up or logs in through the Next.js or Electron application. Clerk 
        |
        | 3. Create/Update User
        v
-[ (Database) ]
-Stage 2: Real-Time Screen Recording & Ingestion
+[ Database ]
+```
+
+### Stage 2: Real-Time Screen Recording & Ingestion
 The user starts a recording in the Electron app. The app captures the screen and sends video "chunks" every second over a WebSocket to our dedicated Express.js server, which writes them to a temporary file.
 
+```bash
 [ Electron Desktop App ]
        |
        | 5. Stream Video Chunks (WebSocket)
@@ -170,9 +202,12 @@ The user starts a recording in the Electron app. The app captures the screen and
        | 6. Write chunks to a temporary file
        v
 [ Temp File System ]
-Stage 3: Video Processing, Storage & AI Enrichment
+```
+
+### Stage 3: Video Processing, Storage & AI Enrichment
 When the recording stops, the Express server tells the Next.js backend to create a "processing" entry in the database. The full video is then uploaded to a private AWS S3 bucket. Once the upload is complete, the AI pipeline kicks off: the video is transcribed by Whisper AI, summarized by OpenAI, and indexed by VoiceFlow. Finally, the database entry is updated to "completed" with all the new AI data, and the temporary file is deleted.
 
+```bash
 [ Express.js Server ]
        |
        | 7. API Call to Next.js -> [ Create "Processing" DB Entry ]
@@ -196,9 +231,12 @@ When the recording stops, the Express server tells the Next.js backend to create
        | 14. Delete temp file from [ Temp File System ]
        v
    (Process Complete)
-Stage 4: Video Playback
+```
+
+### Stage 4: Video Playback
 When a user on the Next.js frontend clicks to watch a video, the request is routed through AWS CloudFront. To maintain security, CloudFront is the only service with permission to fetch the video from our private S3 bucket. It then securely streams the content with low latency to the user's browser.
 
+```bash
 [ Next.js Web App ]
        |
        | 15. User requests to play a video
@@ -216,3 +254,5 @@ When a user on the Next.js frontend clicks to watch a video, the request is rout
        | 18. Streams the video with low latency back to the user
        v
 [ Next.js Web App ]
+```
+
